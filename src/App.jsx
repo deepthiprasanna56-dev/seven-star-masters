@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import EmberCanvas from './components/EmberCanvas';
 import Home from './pages/Home';
 import About from './pages/About';
 import Sports from './pages/Sports';
@@ -48,7 +49,11 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-[#060609] text-gray-100 flex flex-col font-['Outfit'] selection:bg-red-600 selection:text-white">
+      
+      {/* Global Interactive Embers & Gravity Particle Canvas */}
+      <EmberCanvas />
+
+      <div className="relative z-20 min-h-screen bg-[#060609] text-gray-100 flex flex-col font-['Outfit'] selection:bg-red-600 selection:text-white">
         
         {/* Navigation */}
         <Navbar onOpenMembershipModal={() => handleOpenMembershipModal('premium')} />

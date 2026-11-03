@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { X, CheckCircle2, Flame, Shield, Award, Sparkles, CreditCard, ChevronRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { membershipPlans } from '../data/membershipData';
+import { sound } from '../utils/soundEffects';
+import { SquidPlayerBadge, SquidSymbols } from './SquidHudElements';
 
 export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'premium' }) {
   const [selectedPlan, setSelectedPlan] = useState(preselectedPlan);
   const [billingCycle, setBillingCycle] = useState('monthly');
+  const [playerNumber, setPlayerNumber] = useState('456');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -60,21 +63,23 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
     e.preventDefault();
     if (!validate()) return;
 
-    // Generate unique membership ID
     const randomId = 'SSM-' + Math.floor(100000 + Math.random() * 900000);
+    const assignedPlayer = String(Math.floor(100 + Math.random() * 899));
+    setPlayerNumber(assignedPlayer);
     setMembershipId(randomId);
     setIsSubmitted(true);
 
-    // Trigger celebration confetti
+    sound.playSuccess();
+
     try {
       confetti({
-        particleCount: 100,
-        spread: 70,
+        particleCount: 140,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ['#ef4444', '#dc2626', '#ffffff', '#fbbf24']
+        colors: ['#ef4444', '#f43f5e', '#ffffff', '#fbbf24']
       });
     } catch {
-      // fallback if confetti blocked
+      // fallback
     }
   };
 
@@ -82,15 +87,18 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
   const price = billingCycle === 'monthly' ? activePlanData.monthlyPrice : activePlanData.annualPrice;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#0c0c14] border border-red-600/50 rounded-2xl shadow-[0_0_50px_rgba(239,68,68,0.3)] my-8 overflow-hidden text-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-[#0c0c14] border border-red-600/60 rounded-3xl shadow-[0_0_60px_rgba(239,68,68,0.35)] my-8 overflow-hidden text-gray-100">
         
         {/* Glow Header bar */}
         <div className="h-1.5 w-full bg-gradient-to-r from-red-600 via-rose-500 to-red-700"></div>
 
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={() => {
+            sound.playClick();
+            onClose();
+          }}
           className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white bg-zinc-900/80 hover:bg-red-600/30 rounded-full border border-zinc-800 transition-colors z-20"
           aria-label="Close modal"
         >
@@ -98,70 +106,41 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
         </button>
 
         {isSubmitted ? (
-          /* Confirmation State */
+          /* Confirmation State with Holographic Squid Badge */
           <div className="p-8 sm:p-10 text-center space-y-6">
             <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-red-600 to-red-950 flex items-center justify-center border-2 border-red-400 shadow-[0_0_35px_rgba(239,68,68,0.7)] animate-bounce">
               <CheckCircle2 className="w-10 h-10 text-white" />
             </div>
 
             <div>
-              <span className="text-xs uppercase tracking-widest text-red-500 font-bold">Welcome to the Brotherhood</span>
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <SquidSymbols size="sm" />
+                <span className="text-xs uppercase tracking-widest text-red-500 font-bold">Arena Induction Complete</span>
+              </div>
               <h3 className="text-3xl font-black uppercase tracking-wider text-white mt-1 font-['Rajdhani']">
-                Registration Confirmed!
+                Player Credentials Issued!
               </h3>
-              <p className="text-zinc-400 text-sm mt-2 max-w-md mx-auto">
-                Welcome, <span className="text-white font-semibold">{formData.fullName}</span>! Your official membership card has been issued.
+              <p className="text-zinc-400 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+                Welcome, <span className="text-white font-semibold">{formData.fullName}</span>. You have been drafted as <strong className="text-red-400">PLAYER #{playerNumber}</strong>.
               </p>
             </div>
 
-            {/* Digital Membership Pass Card */}
-            <div className="max-w-md mx-auto p-5 rounded-xl bg-gradient-to-br from-zinc-950 via-[#161219] to-zinc-950 border border-red-600/60 shadow-[0_0_25px_rgba(239,68,68,0.3)] text-left relative overflow-hidden">
-              <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-red-600/10 rounded-full blur-2xl"></div>
-              
-              <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-red-600 flex items-center justify-center font-black text-sm text-white">7</div>
-                  <span className="text-sm font-black tracking-wider text-white">SEVEN STAR MASTERS</span>
-                </div>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-600/30 text-red-400 border border-red-500/40 uppercase font-bold">
-                  {activePlanData.name} Plan
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div>
-                  <span className="text-zinc-500 block">Member Name</span>
-                  <span className="text-white font-semibold text-sm">{formData.fullName}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block">Membership ID</span>
-                  <span className="text-red-400 font-mono font-bold text-sm">{membershipId}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block">Primary Sport</span>
-                  <span className="text-zinc-200">{formData.primarySport}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block">Valid Until</span>
-                  <span className="text-zinc-200">
-                    {billingCycle === 'monthly' ? '30 Days From Today' : '1 Year Unlimited'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400">
-                <span>Pass status: <span className="text-emerald-400 font-semibold">Active & Verified</span></span>
-                <span>Olympic Arena Access: Granted</span>
-              </div>
+            {/* Futuristic Holographic Player Pass Badge */}
+            <div className="max-w-md mx-auto">
+              <SquidPlayerBadge
+                playerNumber={playerNumber}
+                playerName={formData.fullName}
+                tier={`${activePlanData.name.toUpperCase()} TIER`}
+              />
             </div>
 
             <p className="text-xs text-zinc-500 max-w-sm mx-auto">
-              A copy of your induction kit, digital QR barcode pass, and locker allocation instructions has been emailed to <span className="text-zinc-300">{formData.email}</span>.
+              Digital biometric arena entry pass and locker allocation confirmation has been transmitted to <span className="text-zinc-300">{formData.email}</span>.
             </p>
 
             <button
               onClick={onClose}
-              className="w-full sm:w-auto px-8 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold tracking-wider uppercase text-sm shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all"
+              className="w-full sm:w-auto px-8 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold tracking-wider uppercase text-xs shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all"
             >
               Enter Seven Star Arena
             </button>
@@ -170,15 +149,18 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
           /* Registration Form */
           <div className="p-6 sm:p-8 space-y-6">
             <div>
-              <div className="flex items-center gap-2">
-                <Flame className="w-5 h-5 text-red-500 animate-pulse" />
-                <span className="text-xs font-bold tracking-widest text-red-500 uppercase">Official Enlistment</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Flame className="w-5 h-5 text-red-500 animate-pulse" />
+                  <span className="text-xs font-bold tracking-widest text-red-500 uppercase">Official Enlistment</span>
+                </div>
+                <SquidSymbols size="sm" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white mt-1 font-['Rajdhani']">
                 Join Seven Star Masters
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-                Select your membership tier and complete registration to unlock world-class facilities and coaching.
+                Select tier, claim your official Player Tag, and unlock Olympic-standard arenas.
               </p>
             </div>
 
@@ -188,15 +170,18 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
                 <button
                   key={plan.id}
                   type="button"
-                  onClick={() => setSelectedPlan(plan.id)}
-                  className={`p-3 rounded-xl border text-left transition-all relative ${
+                  onClick={() => {
+                    sound.playClick();
+                    setSelectedPlan(plan.id);
+                  }}
+                  className={`p-3 rounded-2xl border text-left transition-all relative ${
                     selectedPlan === plan.id
                       ? 'border-red-500 bg-red-950/40 shadow-[0_0_20px_rgba(239,68,68,0.35)]'
                       : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700'
                   }`}
                 >
                   {plan.popular && (
-                    <span className="absolute -top-2 right-2 text-[9px] font-bold uppercase bg-red-600 text-white px-1.5 py-0.5 rounded-full">
+                    <span className="absolute -top-2 right-2 text-[8px] font-bold uppercase bg-red-600 text-white px-1.5 py-0.5 rounded-full">
                       Hot
                     </span>
                   )}
@@ -360,13 +345,13 @@ export default function MembershipModal({ isOpen, onClose, preselectedPlan = 'pr
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold tracking-wider uppercase text-sm shadow-[0_0_25px_rgba(239,68,68,0.5)] transition-all"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold tracking-wider uppercase text-xs shadow-[0_0_25px_rgba(239,68,68,0.5)] transition-all"
                 >
                   <Flame className="w-4 h-4" />
-                  <span>Confirm Registration • ₹{price}/mo</span>
+                  <span>Enlist Athlete • Claim Pass (₹{price}/mo)</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
-                <p className="text-center text-[11px] text-zinc-500 mt-2">
+                <p className="text-center text-[10px] text-zinc-500 mt-2">
                   🔒 Zero registration fee. Instant access badge issued on completion.
                 </p>
               </div>

@@ -5,6 +5,9 @@ import {
 } from 'lucide-react';
 import { eventsData } from '../data/eventsData';
 import EventCard from '../components/EventCard';
+import TournamentBracket from '../components/TournamentBracket';
+import { SquidSymbols } from '../components/SquidHudElements';
+import { sound } from '../utils/soundEffects';
 
 export default function Events({ onOpenEventModal }) {
   const [filter, setFilter] = useState('All');
@@ -43,6 +46,7 @@ export default function Events({ onOpenEventModal }) {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-950/60 border border-red-500/40 text-red-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
           <Trophy className="w-3.5 h-3.5" />
           <span>Championship Circuit</span>
+          <SquidSymbols size="sm" />
         </div>
         <h1 className="text-4xl sm:text-6xl font-black uppercase text-white font-['Rajdhani'] leading-none">
           EVENTS & TOURNAMENTS
@@ -56,7 +60,10 @@ export default function Events({ onOpenEventModal }) {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setFilter(cat)}
+              onClick={() => {
+                sound.playClick();
+                setFilter(cat);
+              }}
               className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
                 filter === cat
                   ? 'bg-red-600 text-white shadow-[0_0_20px_rgba(239,68,68,0.5)] border border-red-500'
@@ -110,7 +117,10 @@ export default function Events({ onOpenEventModal }) {
 
               <div className="pt-2 flex items-center gap-4">
                 <button
-                  onClick={() => onOpenEventModal(flagshipEvent)}
+                  onClick={() => {
+                    sound.playBassDrop();
+                    onOpenEventModal(flagshipEvent);
+                  }}
                   className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold uppercase text-xs tracking-wider shadow-[0_0_20px_rgba(239,68,68,0.5)] flex items-center gap-2 transition-all"
                 >
                   <span>Register Team For Championship</span>
@@ -133,7 +143,7 @@ export default function Events({ onOpenEventModal }) {
                 ].map((unit) => (
                   <div
                     key={unit.label}
-                    className="w-16 sm:w-20 p-2 sm:p-3 rounded-xl bg-black/80 border border-red-600/50 text-center shadow-[0_0_15px_rgba(239,68,68,0.25)]"
+                    className="w-16 sm:w-20 p-2 sm:p-3 rounded-2xl bg-black/80 border border-red-600/50 text-center shadow-[0_0_15px_rgba(239,68,68,0.25)]"
                   >
                     <span className="block text-2xl sm:text-3xl font-black text-white font-['Rajdhani'] leading-tight">
                       {unit.val < 10 ? `0${unit.val}` : unit.val}
@@ -151,6 +161,11 @@ export default function Events({ onOpenEventModal }) {
 
           </div>
         </div>
+      </div>
+
+      {/* Interactive Tournament Bracket */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <TournamentBracket />
       </div>
 
       {/* Events Grid */}
