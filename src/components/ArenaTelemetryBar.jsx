@@ -4,7 +4,7 @@ import { SquidSymbols } from './SquidHudElements';
 export default function ArenaTelemetryBar() {
   return (
     <div className="w-full bg-[#09070d]/95 border-b border-red-950/80 backdrop-blur-md py-1.5 px-4 text-[11px] text-zinc-400 font-['Rajdhani'] font-semibold tracking-wider overflow-x-auto select-none">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 whitespace-nowrap">
+      <div className="w-full flex items-center justify-between gap-6 whitespace-nowrap">
         
         {/* Left: Status beacon */}
         <div className="flex items-center gap-3">

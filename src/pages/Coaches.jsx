@@ -23,7 +23,7 @@ export default function Coaches({ onOpenCoachModal }) {
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-red-600/10 blur-[140px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-950/60 border border-red-500/40 text-red-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
           <Award className="w-3.5 h-3.5" />
           <span>Learn From Masters</span>
@@ -54,7 +54,7 @@ export default function Coaches({ onOpenCoachModal }) {
       </div>
 
       {/* Coaches Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCoaches.map((coach) => (
             <CoachCard
@@ -67,7 +67,7 @@ export default function Coaches({ onOpenCoachModal }) {
       </div>
 
       {/* Coaching Methodology Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
         <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-red-950/50 via-zinc-950 to-zinc-950 border border-red-600/40 shadow-[0_0_35px_rgba(239,68,68,0.2)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-3">

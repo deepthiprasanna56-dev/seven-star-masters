@@ -101,6 +101,16 @@ export default function EventRegisterModal({ isOpen, onClose, event }) {
           </div>
         ) : (
           <div className="p-6 sm:p-7 space-y-5">
+            {event.image && (
+              <div className="relative -mx-6 -mt-6 h-36 overflow-hidden sm:-mx-7 sm:-mt-7 sm:h-44">
+                <img
+                  src={event.image}
+                  alt={`${event.title} tournament`}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c14] via-black/20 to-transparent" />
+              </div>
+            )}
             <div>
               <div className="flex items-center gap-1.5 text-red-500 text-xs font-bold uppercase tracking-wider">
                 <Trophy className="w-4 h-4" />

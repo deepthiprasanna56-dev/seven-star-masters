@@ -5,11 +5,12 @@ import {
 } from 'lucide-react';
 import { sportsData } from '../data/sportsData';
 import ArenaCourtSelector from '../components/ArenaCourtSelector';
+import AthleteRadarChart from '../components/AthleteRadarChart';
 import TiltCard from '../components/TiltCard';
 import { SquidSymbols } from '../components/SquidHudElements';
 import { sound } from '../utils/soundEffects';
 
-export default function Sports({ onOpenMembershipModal, onOpenCoachModal }) {
+export default function Sports({ onOpenMembershipModal, onOpenCoachModal, onOpenCCTVModal }) {
   const [filter, setFilter] = useState('All');
 
   const categories = ['All', 'Outdoor', 'Indoor', 'Racquet'];
@@ -66,6 +67,11 @@ export default function Sports({ onOpenMembershipModal, onOpenCoachModal }) {
       {/* Interactive Campus Sector Selector */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <ArenaCourtSelector onSelectCourt={() => onOpenMembershipModal('premium')} />
+      </div>
+
+      {/* Interactive Biomechanical Attribute Radar Chart */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <AthleteRadarChart />
       </div>
 
       {/* Sports Detail List */}

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Flame, ChevronRight, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Menu, X, Flame, ChevronRight, Volume2, VolumeX, Video } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 import { SquidSymbols } from './SquidHudElements';
 
-export default function Navbar({ onOpenMembershipModal }) {
+export default function Navbar({ onOpenMembershipModal, onOpenCCTVModal }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -88,9 +88,23 @@ export default function Navbar({ onOpenMembershipModal }) {
             ))}
           </nav>
 
-          {/* Right Actions: Audio FX Toggle & CTA */}
+          {/* Right Actions: Live Cams, Audio FX Toggle & CTA */}
           <div className="hidden sm:flex items-center gap-3">
             
+            {/* Live CCTV Modal Button */}
+            <button
+              onClick={() => {
+                sound.playBassDrop();
+                if (onOpenCCTVModal) onOpenCCTVModal();
+              }}
+              title="Live Arena CCTV Feeds"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-950/50 border border-red-600/50 text-[11px] font-bold uppercase text-red-400 hover:text-white hover:bg-red-600/30 transition-all shadow-[0_0_12px_rgba(239,68,68,0.3)]"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+              <Video className="w-3.5 h-3.5" />
+              <span>Live Cams</span>
+            </button>
+
             {/* Audio Toggle */}
             <button
               onClick={handleSoundToggle}
@@ -124,6 +138,17 @@ export default function Navbar({ onOpenMembershipModal }) {
 
           {/* Mobile Menu & Audio */}
           <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={() => {
+                sound.playBassDrop();
+                if (onOpenCCTVModal) onOpenCCTVModal();
+              }}
+              className="p-2 rounded-lg bg-red-950/60 border border-red-900 text-red-400"
+              aria-label="Live Cams"
+            >
+              <Video className="w-4 h-4" />
+            </button>
+
             <button
               onClick={handleSoundToggle}
               className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400"
@@ -180,9 +205,17 @@ export default function Navbar({ onOpenMembershipModal }) {
           </div>
 
           <div className="pt-4 border-t border-red-900/30 flex flex-col gap-3">
-            <div className="flex items-center justify-center gap-3 py-1">
-              <SquidSymbols size="sm" />
-            </div>
+            <button
+              onClick={() => {
+                sound.playBassDrop();
+                setIsOpen(false);
+                if (onOpenCCTVModal) onOpenCCTVModal();
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-950/60 border border-red-600/50 text-red-400 font-bold uppercase text-xs"
+            >
+              <Video className="w-4 h-4" />
+              <span>Launch Live Arena Feeds</span>
+            </button>
 
             <button
               onClick={() => {

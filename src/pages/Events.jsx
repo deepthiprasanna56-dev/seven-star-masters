@@ -42,7 +42,7 @@ export default function Events({ onOpenEventModal }) {
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-red-600/10 blur-[140px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-950/60 border border-red-500/40 text-red-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
           <Trophy className="w-3.5 h-3.5" />
           <span>Championship Circuit</span>
@@ -77,7 +77,7 @@ export default function Events({ onOpenEventModal }) {
       </div>
 
       {/* Flagship Event Banner with Live Countdown */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="relative rounded-3xl bg-gradient-to-r from-red-950/90 via-[#140c14] to-zinc-950 border border-red-600/60 p-6 sm:p-10 shadow-[0_0_40px_rgba(239,68,68,0.35)] overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
@@ -164,12 +164,12 @@ export default function Events({ onOpenEventModal }) {
       </div>
 
       {/* Interactive Tournament Bracket */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <TournamentBracket />
       </div>
 
       {/* Events Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-['Rajdhani'] mb-6 border-l-4 border-red-600 pl-3">
           All Scheduled Tournaments
         </h3>

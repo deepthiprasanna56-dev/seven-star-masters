@@ -8,6 +8,8 @@ import { membershipPlans, planComparisonFeatures } from '../data/membershipData'
 import { sound } from '../utils/soundEffects';
 import TiltCard from '../components/TiltCard';
 import { SquidPlayerBadge, SquidSymbols } from '../components/SquidHudElements';
+import AthleteCardStudio from '../components/AthleteCardStudio';
+import MembershipCalculator from '../components/MembershipCalculator';
 
 export default function Membership({ onOpenMembershipModal }) {
   const [billingCycle, setBillingCycle] = useState('monthly');
@@ -232,6 +234,31 @@ export default function Membership({ onOpenMembershipModal }) {
         </div>
       </div>
 
+      {/* ===================== INTERACTIVE 3D ATHLETE PASS STUDIO ===================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <AthleteCardStudio
+          onClaimPass={(passData) => {
+            setFormData((prev) => ({
+              ...prev,
+              fullName: passData.athleteName,
+              primarySport: passData.sport
+            }));
+            setPlayerNumber(passData.playerNumber);
+            document.getElementById('registration-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
+
+      {/* ===================== INTERACTIVE MEMBERSHIP VALUE CALCULATOR ===================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <MembershipCalculator
+          onSelectPlan={(planKey) => {
+            setActivePlan(planKey);
+            document.getElementById('registration-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
+
       {/* Feature Comparison Table */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div className="text-center max-w-xl mx-auto mb-10">
@@ -441,7 +468,7 @@ export default function Membership({ onOpenMembershipModal }) {
                     {errors.emergencyContact && <p className="text-xs text-red-400 mt-1">{errors.emergencyContact}</p>}
                   </div>
 
-                  {/* Emergency Contact Phone */}
+                  {/* Emergency Phone */}
                   <div>
                     <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-1">
                       Emergency Contact Phone *

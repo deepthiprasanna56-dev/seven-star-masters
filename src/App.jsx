@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import EmberCanvas from './components/EmberCanvas';
+import CyberCursor from './components/CyberCursor';
 import Home from './pages/Home';
 import About from './pages/About';
 import Sports from './pages/Sports';
@@ -17,6 +18,7 @@ import MembershipModal from './components/MembershipModal';
 import CoachBookingModal from './components/CoachBookingModal';
 import EventRegisterModal from './components/EventRegisterModal';
 import VideoModal from './components/VideoModal';
+import ArenaCCTVModal from './components/ArenaCCTVModal';
 
 export default function App() {
   // Modal states
@@ -30,6 +32,7 @@ export default function App() {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [cctvModalOpen, setCctvModalOpen] = useState(false);
 
   const handleOpenMembershipModal = (plan = 'premium') => {
     setSelectedPlan(plan);
@@ -53,10 +56,16 @@ export default function App() {
       {/* Global Interactive Embers & Gravity Particle Canvas */}
       <EmberCanvas />
 
+      {/* Futuristic Cyber Reticle Cursor */}
+      <CyberCursor />
+
       <div className="relative z-20 min-h-screen bg-[#060609] text-gray-100 flex flex-col font-['Outfit'] selection:bg-red-600 selection:text-white">
         
         {/* Navigation */}
-        <Navbar onOpenMembershipModal={() => handleOpenMembershipModal('premium')} />
+        <Navbar
+          onOpenMembershipModal={() => handleOpenMembershipModal('premium')}
+          onOpenCCTVModal={() => setCctvModalOpen(true)}
+        />
 
         {/* Main Content Area */}
         <main className="flex-grow">
@@ -69,6 +78,7 @@ export default function App() {
                   onOpenCoachModal={handleOpenCoachModal}
                   onOpenEventModal={handleOpenEventModal}
                   onOpenVideoModal={() => setVideoModalOpen(true)}
+                  onOpenCCTVModal={() => setCctvModalOpen(true)}
                 />
               }
             />
@@ -82,12 +92,17 @@ export default function App() {
                 <Sports
                   onOpenMembershipModal={handleOpenMembershipModal}
                   onOpenCoachModal={handleOpenCoachModal}
+                  onOpenCCTVModal={() => setCctvModalOpen(true)}
                 />
               }
             />
             <Route
               path="/membership"
-              element={<Membership onOpenMembershipModal={handleOpenMembershipModal} />}
+              element={
+                <Membership
+                  onOpenMembershipModal={handleOpenMembershipModal}
+                />
+              }
             />
             <Route
               path="/coaches"
@@ -107,6 +122,7 @@ export default function App() {
                   onOpenCoachModal={handleOpenCoachModal}
                   onOpenEventModal={handleOpenEventModal}
                   onOpenVideoModal={() => setVideoModalOpen(true)}
+                  onOpenCCTVModal={() => setCctvModalOpen(true)}
                 />
               }
             />
@@ -138,6 +154,11 @@ export default function App() {
         <VideoModal
           isOpen={videoModalOpen}
           onClose={() => setVideoModalOpen(false)}
+        />
+
+        <ArenaCCTVModal
+          isOpen={cctvModalOpen}
+          onClose={() => setCctvModalOpen(false)}
         />
 
       </div>

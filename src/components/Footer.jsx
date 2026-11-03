@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   MapPin, Phone, Mail, Clock, Send, ChevronRight, Award, Shield, CheckCircle2 
@@ -45,6 +45,22 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState('');
+  const [legalPage, setLegalPage] = useState(null);
+
+  useEffect(() => {
+    if (!legalPage) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setLegalPage(null);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [legalPage]);
+
+  const legalContent = {
+    'Privacy Policy': 'We use the details you submit through this site to respond to enquiries and manage demo bookings. This demo does not send or store form submissions on a server. Contact hello@sevenstarmasters.com to ask about your information.',
+    'Terms of Service': 'Information and booking confirmations on this demonstration site are illustrative and do not create a paid reservation or contract. Contact the club to confirm availability, prices, and applicable terms before visiting.',
+    'Club Rules & Regulations': 'Athletes and visitors should follow staff instructions, use equipment safely, respect other members, and arrive on time for sessions. Ask club staff for the current facility rules before participating.'
+  };
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -63,7 +79,7 @@ export default function Footer() {
       {/* Red ambient glow at footer base */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-red-600/10 blur-[100px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
           
           {/* Col 1: Brand & Bio */}
@@ -167,32 +183,32 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/sports" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/sports#cricket" className="text-zinc-400 hover:text-red-400 transition-colors">
                   🏏 Cricket Academy
                 </Link>
               </li>
               <li>
-                <Link to="/sports" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/sports#football" className="text-zinc-400 hover:text-red-400 transition-colors">
                   ⚽ FIFA Turf Football
                 </Link>
               </li>
               <li>
-                <Link to="/sports" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/sports#basketball" className="text-zinc-400 hover:text-red-400 transition-colors">
                   🏀 FIBA Hardwood Basketball
                 </Link>
               </li>
               <li>
-                <Link to="/sports" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/sports#badminton" className="text-zinc-400 hover:text-red-400 transition-colors">
                   🏸 BWF Badminton Complex
                 </Link>
               </li>
               <li>
-                <Link to="/sports" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/sports#tennis" className="text-zinc-400 hover:text-red-400 transition-colors">
                   🎾 Grand Slam Clay & Hard Courts
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-zinc-400 hover:text-red-400 transition-colors">
+                <Link to="/about#recovery" className="text-zinc-400 hover:text-red-400 transition-colors">
                   ❄️ Cryo & Hydro Recovery Spa
                 </Link>
               </li>
@@ -256,11 +272,52 @@ export default function Footer() {
         <div className="pt-8 mt-8 border-t border-zinc-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <p>© {new Date().getFullYear()} Seven Star Masters. All Rights Reserved. Crafted for Champions.</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-zinc-400 cursor-pointer">Privacy Policy</span>
-            <span className="hover:text-zinc-400 cursor-pointer">Terms of Service</span>
-            <span className="hover:text-zinc-400 cursor-pointer">Club Rules & Regulations</span>
+            {Object.keys(legalContent).map((title) => (
+              <button
+                key={title}
+                type="button"
+                onClick={() => setLegalPage(title)}
+                className="hover:text-zinc-300 transition-colors"
+              >
+                {title}
+              </button>
+            ))}
           </div>
         </div>
+
+        {legalPage && (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setLegalPage(null);
+            }}
+          >
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="footer-legal-title"
+              className="relative w-full max-w-lg rounded-2xl border border-red-600/50 bg-[#0d0d15] p-6 text-white shadow-[0_0_40px_rgba(239,68,68,0.25)]"
+            >
+              <button
+                type="button"
+                onClick={() => setLegalPage(null)}
+                aria-label="Close policy"
+                className="absolute right-4 top-4 rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-400 hover:text-white"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+              <h2 id="footer-legal-title" className="mb-3 pr-10 text-xl font-bold uppercase tracking-wide">{legalPage}</h2>
+              <p className="text-sm leading-relaxed text-zinc-300">{legalContent[legalPage]}</p>
+              <button
+                type="button"
+                onClick={() => setLegalPage(null)}
+                className="mt-6 rounded-lg bg-red-600 px-5 py-2 text-xs font-bold uppercase tracking-wider hover:bg-red-500"
+              >
+                Close
+              </button>
+            </section>
+          </div>
+        )}
 
       </div>
     </footer>

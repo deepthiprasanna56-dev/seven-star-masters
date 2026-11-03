@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Flame, ChevronRight, Play, Trophy, Shield, Award, Calendar, 
-  MapPin, CheckCircle2, ArrowRight, Star, Users, Zap, Clock 
+  MapPin, CheckCircle2, ArrowRight, Star, Users, Zap, Clock, Video, Sparkles 
 } from 'lucide-react';
 import { sportsData } from '../data/sportsData';
 import { coachesData } from '../data/coachesData';
@@ -18,6 +18,7 @@ import TiltCard from '../components/TiltCard';
 import ArenaTelemetryBar from '../components/ArenaTelemetryBar';
 import TournamentBracket from '../components/TournamentBracket';
 import ArenaCourtSelector from '../components/ArenaCourtSelector';
+import AthleteRadarChart from '../components/AthleteRadarChart';
 import { SquidSymbols } from '../components/SquidHudElements';
 import { sound } from '../utils/soundEffects';
 
@@ -25,7 +26,8 @@ export default function Home({
   onOpenMembershipModal, 
   onOpenCoachModal, 
   onOpenEventModal, 
-  onOpenVideoModal 
+  onOpenVideoModal,
+  onOpenCCTVModal 
 }) {
   const [timeLeft, setTimeLeft] = useState({ days: 42, hours: 14, minutes: 28, seconds: 50 });
 
@@ -105,7 +107,7 @@ export default function Home({
           </p>
 
           {/* Call to Actions with Sound Feedback */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 max-w-lg mx-auto">
             <button
               onClick={() => {
                 sound.playBassDrop();
@@ -123,12 +125,24 @@ export default function Home({
                 sound.playBassDrop();
                 onOpenVideoModal();
               }}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-red-600/50 hover:border-red-500 text-white font-bold tracking-wider uppercase text-xs sm:text-sm shadow-[0_0_20px_rgba(239,68,68,0.25)] flex items-center justify-center gap-2.5 transition-all backdrop-blur-md"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-red-600/50 hover:border-red-500 text-white font-bold tracking-wider uppercase text-xs sm:text-sm shadow-[0_0_20px_rgba(239,68,68,0.25)] flex items-center justify-center gap-2.5 transition-all backdrop-blur-md"
             >
               <div className="w-6 h-6 rounded-full bg-red-600/40 flex items-center justify-center text-red-400">
                 <Play className="w-3.5 h-3.5 fill-red-400 ml-0.5" />
               </div>
               <span>Watch Our Story</span>
+            </button>
+
+            <button
+              onClick={() => {
+                sound.playBassDrop();
+                if (onOpenCCTVModal) onOpenCCTVModal();
+              }}
+              className="w-full sm:w-auto px-5 py-3.5 rounded-full bg-red-950/50 hover:bg-red-900/40 border border-red-600/60 text-red-400 hover:text-white font-bold tracking-wider uppercase text-xs shadow-[0_0_15px_rgba(239,68,68,0.3)] flex items-center justify-center gap-2 transition-all"
+            >
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <Video className="w-4 h-4" />
+              <span>Live Cams</span>
             </button>
           </div>
 
@@ -211,6 +225,11 @@ export default function Home({
       {/* ===================== INTERACTIVE CAMPUS ARENA SELECTOR ===================== */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ArenaCourtSelector onSelectCourt={() => onOpenMembershipModal('premium')} />
+      </div>
+
+      {/* ===================== ATHLETE RADAR ATTRIBUTE MATRIX ===================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AthleteRadarChart />
       </div>
 
       {/* ===================== ABOUT US & TROPHY SHOWCASE ===================== */}
