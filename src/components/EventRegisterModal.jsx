@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X, Trophy, Calendar, MapPin, Users, CheckCircle2, ChevronRight, Shield } from 'lucide-react';
 
 export default function EventRegisterModal({ isOpen, onClose, event }) {
@@ -14,6 +14,18 @@ export default function EventRegisterModal({ isOpen, onClose, event }) {
   const [errors, setErrors] = useState({});
   const [registered, setRegistered] = useState(false);
   const [registrationPass, setRegistrationPass] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setRegistered(false);
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !event) return null;
 
@@ -43,15 +55,21 @@ export default function EventRegisterModal({ isOpen, onClose, event }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-[#0c0c14] border border-red-600/50 rounded-2xl shadow-[0_0_40px_rgba(239,68,68,0.35)] overflow-hidden text-gray-100 my-8">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) handleClose();
+      }}
+    >
+      <div role="dialog" aria-modal="true" aria-label="Event registration" className="relative w-full max-w-lg bg-[#0c0c14] border border-red-600/50 rounded-2xl shadow-[0_0_40px_rgba(239,68,68,0.35)] overflow-hidden text-gray-100 my-8">
         
         {/* Glow accent */}
         <div className="h-1.5 w-full bg-gradient-to-r from-red-600 to-rose-600"></div>
 
         <button
+          type="button"
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-full border border-zinc-800 transition-colors"
+          className="absolute top-4 right-4 z-20 p-2 text-white hover:text-white bg-black/80 rounded-full border border-zinc-500 shadow-lg transition-colors"
           aria-label="Close"
         >
           <X className="w-5 h-5" />

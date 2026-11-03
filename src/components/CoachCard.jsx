@@ -8,11 +8,14 @@ export default function CoachCard({ coach, onBookCoach }) {
       <div className="group relative bg-[#0e0e16]/95 backdrop-blur-md rounded-3xl border border-red-950/70 overflow-hidden hover:border-red-600/80 transition-all duration-300 hover:shadow-[0_0_35px_rgba(239,68,68,0.35)] flex flex-col justify-between h-full">
         
         {/* Coach Image */}
-        <div className="relative h-64 sm:h-72 overflow-hidden bg-zinc-950">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-950 sm:aspect-[5/4] lg:aspect-[4/3]">
           <img
             src={coach.image}
             alt={coach.name}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 brightness-95 group-hover:brightness-105"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            className="absolute inset-0 h-full w-full object-cover object-[center_25%] transition-transform duration-700 brightness-95 group-hover:scale-105 group-hover:brightness-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e16] via-[#0e0e16]/30 to-transparent"></div>
 

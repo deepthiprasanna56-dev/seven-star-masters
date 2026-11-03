@@ -55,7 +55,7 @@ export default function Coaches({ onOpenCoachModal }) {
 
       {/* Coaches Grid */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {filteredCoaches.map((coach) => (
             <CoachCard
               key={coach.id}

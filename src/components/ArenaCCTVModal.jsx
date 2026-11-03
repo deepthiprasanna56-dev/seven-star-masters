@@ -112,7 +112,7 @@ export default function ArenaCCTVModal({ isOpen, onClose }) {
           <img
             src={currentCam.image}
             alt={currentCam.title}
-            className="w-full h-full object-cover brightness-90 filter contrast-110 transition-all duration-300"
+            className="absolute inset-0 w-full h-full object-cover brightness-90 filter contrast-110 transition-all duration-300"
           />
 
           {/* CRT Scanline Filter Simulation */}

@@ -85,6 +85,10 @@ div {
   text-shadow: 0 0 18px rgba(239, 68, 68, 0.75), 0 0 30px rgba(239, 68, 68, 0.4);
 }
 
+.hero-title-glow {
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.35), 0 0 16px rgba(239, 68, 68, 0.16);
+}
+
 .text-glow-white {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }

@@ -58,15 +58,15 @@ export default function Home({
           <img
             src="/images/seven-star-banner-1.jpg"
             alt="Seven Star Masters Hero Arena"
-            className="w-full h-full object-cover object-center opacity-45 filter contrast-125"
+            className="w-full h-full object-cover object-center opacity-75 filter contrast-110"
           />
           {/* Dynamic Red and Obsidian Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060609] via-[#060609]/75 to-[#060609]/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#060609] via-transparent to-[#060609]"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#060609]/75 via-[#060609]/35 to-[#060609]/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#060609]/35 via-transparent to-[#060609]/35"></div>
           
           {/* Atmospheric Red Spotlights */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 bg-red-600/20 blur-[150px] pointer-events-none"></div>
-          <div className="absolute bottom-10 left-10 w-72 h-72 bg-rose-600/10 blur-[120px] pointer-events-none"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 bg-red-600/10 blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-rose-600/5 blur-[100px] pointer-events-none"></div>
         </div>
 
         {/* Floating Squid Game Geometric Holograms in Background */}
@@ -93,7 +93,7 @@ export default function Home({
           {/* Main Hero Headline */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white font-['Rajdhani'] leading-[0.92] mb-4">
             BEYOND LIMITS. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-glow">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-red-600 hero-title-glow">
               BEYOND VICTORY.
             </span>
           </h1>
@@ -113,7 +113,7 @@ export default function Home({
                 sound.playBassDrop();
                 onOpenMembershipModal('premium');
               }}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold tracking-wider uppercase text-xs sm:text-sm shadow-[0_0_30px_rgba(239,68,68,0.6)] flex items-center justify-center gap-2 transition-all transform hover:scale-105"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold tracking-wider uppercase text-xs sm:text-sm shadow-[0_0_18px_rgba(239,68,68,0.35)] flex items-center justify-center gap-2 transition-all transform hover:scale-105"
             >
               <Flame className="w-4 h-4" />
               <span>Join Now</span>
