@@ -12,6 +12,10 @@ export default function EventCard({ event, onRegisterEvent }) {
           <img
             src={event.image}
             alt={event.title}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/images/seven-star-banner-2.jpg';
+            }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e16] via-[#0e0e16]/50 to-transparent"></div>

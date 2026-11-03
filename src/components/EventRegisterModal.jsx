@@ -106,6 +106,10 @@ export default function EventRegisterModal({ isOpen, onClose, event }) {
                 <img
                   src={event.image}
                   alt={`${event.title} tournament`}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/images/seven-star-banner-2.jpg';
+                  }}
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c14] via-black/20 to-transparent" />

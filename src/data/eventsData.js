@@ -44,7 +44,7 @@ export const eventsData = [
     maxTeams: 24,
     status: 'Few Slots Left',
     featured: true,
-    image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80',
     description: 'High-octane 5v5 cage football under stadium neon lights. Fast 20-minute matches with no out-of-bounds walls, testing pure skill, agility, and split-second finishes.',
     rules: [
       'Squads of 7 players (5 on pitch + 2 rolling subs)',
